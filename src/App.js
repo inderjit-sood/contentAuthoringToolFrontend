@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import SchemaSelector from './Components/SchemaSelector';
+import CustomForm from './Components/CustomForm';
 
 function App() {
+  const [selectedSchema, setSelectedSchema] = useState(null);
+
+  const handleSchemaSelect = (schemaJson) => {
+    setSelectedSchema(schemaJson);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+<div className="container">
+      <div className="row">
+        <div className="col-md-12">
+          <SchemaSelector onSelectSchema={handleSchemaSelect} />
+        </div>
+        <div className="col-md-12">
+          {selectedSchema && (
+            <CustomForm
+              schema={selectedSchema}
+              onFormSubmit={(data) => console.log('Form data submitted:', data)}
+              onFormError={(error) => console.error('Form error:', error)}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
