@@ -13,11 +13,15 @@ const CustomForm = ({ schema, onFormSubmit, onFormError }) => {
 
 
   const handleFormSubmit = ({ formData }, e) => {
+    const schemaId = schema.schemaId;
     const articleId = uuidv4();
     const article = {
       articleId,
       articleJson: JSON.stringify(formData),
+      schemaId,
     };
+
+    console.log(`Sending article ${JSON.stringify(article)} to the server`);
 
     fetch('/publish-article', {
       method: 'POST',
@@ -53,7 +57,7 @@ const CustomForm = ({ schema, onFormSubmit, onFormError }) => {
     <div className="col-md-6">
       <h2>Fill the form below:</h2>
       <Form
-        schema={JSON.parse(schema)} //quick-fix, need to move this to the outer component App
+        schema={JSON.parse(schema.schemaString)} //quick-fix, need to move this to the outer component App
         validator={validator}
         onSubmit={handleFormSubmit}
         onError={handleFormError}

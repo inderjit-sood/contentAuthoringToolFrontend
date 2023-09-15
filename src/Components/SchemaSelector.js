@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SchemaSelector = ({ onSelectSchema }) => {
   const [schemas, setSchemas] = useState([]);
-  const [selectedSchema, setSelectedSchema] = useState('');
+  const [selectedSchema, setSelectedSchema] = useState({});
 
   const fetchData = () => {
     fetch('/get-all-schemas')
@@ -25,7 +25,7 @@ const SchemaSelector = ({ onSelectSchema }) => {
     const selectedSchemaValue = schemas.find((schema) => schema.schemaId === selectedSchemaId);
   
     if (selectedSchemaValue) {
-      setSelectedSchema(selectedSchemaValue.schemaString);
+      setSelectedSchema(selectedSchemaValue);
     } else {
       setSelectedSchema(''); // Clear the selected schema if not found
     }
@@ -35,7 +35,7 @@ const SchemaSelector = ({ onSelectSchema }) => {
   const handleFormSubmit = (event) => {
     event.preventDefault();
     if (selectedSchema) {
-        console.log(`Selected the schema ${selectedSchema} and the type is ${typeof selectedSchema}`);
+        console.log(`Selected the schema ${JSON.stringify(selectedSchema)} and the type is ${typeof selectedSchema}`);
         onSelectSchema(selectedSchema);
     }
   };
